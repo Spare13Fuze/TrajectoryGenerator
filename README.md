@@ -66,7 +66,7 @@ print("Calculated Aircraft Yaw:", trajectory['yaw'])
 
 ---
 
-## 📊 Text File Structure Matrix
+## Text File Structure Matrix
 
 When exported by `TrajectoryGenerator.py`, the resulting `Trajectory.txt` layout maps directly to the following matrix columns:
 
