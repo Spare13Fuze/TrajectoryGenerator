@@ -10,7 +10,7 @@ def load_trajectory_data(file_name, pos_switch, att_switch):
     file_name : str
         The path/name of the trajectory file (e.g., 'Trajectory.txt').
     pos_switch : str
-        Filter for position columns. Options: 'ECEF', 'LLA', or 'BOTH'.
+        Filter for position columns. Options: 'ECR', 'LLA', or 'BOTH'.
     att_switch : str
         Filter for attitude columns. Options: 'EULER', 'QUATERNION', or 'BOTH'.
         
@@ -24,8 +24,8 @@ def load_trajectory_data(file_name, pos_switch, att_switch):
     att_switch = att_switch.upper()
     
     # Quick input validation
-    if pos_switch not in {'ECEF', 'LLA', 'BOTH'}:
-        raise ValueError("pos_switch must be 'ECEF', 'LLA', or 'BOTH'")
+    if pos_switch not in {'ECR', 'LLA', 'BOTH'}:
+        raise ValueError("pos_switch must be 'ECR', 'LLA', or 'BOTH'")
     if att_switch not in {'EULER', 'QUATERNION', 'BOTH'}:
         raise ValueError("att_switch must be 'EULER', 'QUATERNION', or 'BOTH'")
         
@@ -38,7 +38,7 @@ def load_trajectory_data(file_name, pos_switch, att_switch):
     
     # 3. Define coordinate and attitude groupings based on TrajectoryGenerator.py definitions
     lla_set = {'Lat', 'Lon', 'Alt'}
-    ecef_set = {'x', 'y', 'z'}
+    ecr_set = {'x', 'y', 'z'}
     euler_set = {'yaw', 'pitch', 'roll'}
     quat_set = {'q0', 'q1', 'q2', 'q3'}
     
@@ -46,8 +46,8 @@ def load_trajectory_data(file_name, pos_switch, att_switch):
     skip_columns = set()
     
     if pos_switch == 'LLA':
-        skip_columns.update(ecef_set)
-    elif pos_switch == 'ECEF':
+        skip_columns.update(ecr_set)
+    elif pos_switch == 'ECR':
         skip_columns.update(lla_set)
         
     if att_switch == 'EULER':
@@ -65,5 +65,5 @@ def load_trajectory_data(file_name, pos_switch, att_switch):
     return trajectory_dict
     
 if __name__ == "__main__":
-    trajectory = load_trajectory_data('trajectory.txt', 'ECEF', 'EULER')
+    trajectory = load_trajectory_data('trajectory.txt', 'ECR', 'EULER')
     print(trajectory['Time'])
